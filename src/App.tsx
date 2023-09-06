@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import Todos from './components/Todos.tsx';
-import type { TodoToggleProps } from './types/todos';
+import type { TodoTitle, TodoToggleProps } from './types/todos';
 import { TODO_FILTERS } from './consts.ts';
 import type { FilterValue } from './types/filter.d.ts';
 import { Footer } from './components/Footer.tsx';
+import { Header } from './components/Header.tsx';
 
 const mockTodos = [
   {
@@ -65,8 +66,19 @@ const App = () => {
     setTodos(newTodos);
   };
 
+  const handleAddTodo = ({ title }: TodoTitle) => {
+    const newTodo = {
+      title,
+      id: crypto.randomUUID(),
+      completed: false,
+    };
+    const newTodos = [...todos, newTodo];
+    setTodos(newTodos);
+  };
+
   return (
     <div className='todoapp'>
+      <Header onAddTodo={handleAddTodo} />
       <Todos
         todos={filteredTodos}
         onRemoveTodo={handleRemove}
