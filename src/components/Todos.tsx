@@ -1,7 +1,11 @@
-import type { Props } from '../@types/todos.ts';
+import type { Props } from '../types/todos';
 import Todo from './Todo.tsx';
 
-export const Todos: React.FC<Props> = ({ todos, onRemoveTodo }) => {
+export const Todos: React.FC<Props> = ({
+  todos,
+  onRemoveTodo,
+  onToggleCompletedTodo,
+}) => {
   return (
     <ul className='todo-list'>
       {todos.map((todo) => (
@@ -12,6 +16,7 @@ export const Todos: React.FC<Props> = ({ todos, onRemoveTodo }) => {
             title={todo.title}
             completed={todo.completed}
             onRemoveTodo={onRemoveTodo}
+            onToggleCompletedTodo={onToggleCompletedTodo}
           />
         </li>
       ))}
