@@ -3417,10 +3417,18 @@ __metadata:
     prettier: ^3.0.3
     react: ^18.2.0
     react-dom: ^18.2.0
+    todomvc-app-css: 2.4.2
     typescript: ^5.0.2
     vite: ^4.4.5
   languageName: unknown
   linkType: soft
+
+"todomvc-app-css@npm:2.4.2":
+  version: 2.4.2
+  resolution: "todomvc-app-css@npm:2.4.2"
+  checksum: 642671ffcee6f0a335967855058a4fe55747424bedb91f0527c51bbc42711e07afd2f650a8db1a17b9c24f07089f2c13c4d246ffd32360ace0980987f50f460a
+  languageName: node
+  linkType: hard
 
 "ts-api-utils@npm:^1.0.1":
   version: 1.0.2

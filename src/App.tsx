@@ -1,9 +1,10 @@
-function App() {
+const App = () => {
   return (
-    <>
-      <h1>App</h1>
-    </>
+    <div className='todoapp'>
+      <header className='header'>
+        <h1>todos</h1>
+      </header>
+    </div>
   );
-}
-
+};
 export default App;
