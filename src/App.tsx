@@ -5,7 +5,7 @@ const mockTodos = [
   {
     id: '1',
     title: 'Ver el twitch de midudev',
-    completed: false,
+    completed: true,
   },
   {
     id: '2',
@@ -21,9 +21,15 @@ const mockTodos = [
 
 const App = () => {
   const [todos, setTodos] = useState(mockTodos);
+
+  const handleRemove = (id: string) => {
+    const newTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(newTodos);
+  };
+
   return (
     <div className='todoapp'>
-      <Todos todos={todos} />
+      <Todos todos={todos} onRemoveTodo={handleRemove} />
     </div>
   );
 };

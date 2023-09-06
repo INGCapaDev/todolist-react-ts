@@ -1,3 +1,5 @@
 import { Todo } from './todos.d.ts';
 
-export type Props = Todo;
+export interface Props extends Todo {
+  onRemoveTodo: (id: string) => void;
+}

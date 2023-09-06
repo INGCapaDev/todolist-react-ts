@@ -8,4 +8,5 @@ type ListOfTodos = Todo[];
 
 export interface Props {
   todos: ListOfTodos;
+  onRemoveTodo: (id: string) => void;
 }
