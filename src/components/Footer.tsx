@@ -1,21 +1,42 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { FilterValue } from '../types/filter.d.ts';
 import { Filters } from './Filters.tsx';
+import { deleteCompleted } from '../api/taskAPI.ts';
+import type { ListOfTodos } from '../types/todos';
+import { toast } from 'react-hot-toast';
 
 interface Props {
   activeCount: number;
   completedCount: number;
+  completedTodos: ListOfTodos;
   filterSelected: FilterValue;
-  onClearCompleted: () => void;
   handleFilterChanged: (filter: FilterValue) => void;
 }
 
 export const Footer: React.FC<Props> = ({
   activeCount = 0,
   completedCount = 0,
+  completedTodos = [],
   filterSelected,
   handleFilterChanged,
-  onClearCompleted,
 }) => {
+  const queryClient = useQueryClient();
+
+  const { mutate: removeCompleted, isPending } = useMutation({
+    mutationKey: ['deleteCompleted'],
+    mutationFn: deleteCompleted,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['todos'],
+      });
+      toast.success('Tareas completadas eliminadas');
+    },
+  });
+
+  const onClearCompleted = () => {
+    removeCompleted(completedTodos);
+  };
+
   return (
     <footer className='footer'>
       <span className='todo-count'>
@@ -28,7 +49,10 @@ export const Footer: React.FC<Props> = ({
       />
 
       {completedCount > 0 && (
-        <button className='clear-completed' onClick={onClearCompleted}>
+        <button
+          className='clear-completed'
+          onClick={onClearCompleted}
+          disabled={isPending}>
           Borrar completadas
         </button>
       )}

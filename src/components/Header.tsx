@@ -1,11 +1,6 @@
-import type { TodoTitle } from '../types/todos.d.ts';
 import { CreateTodo } from './CreateTodo.tsx';
 
-interface Props {
-  onAddTodo: ({ title }: TodoTitle) => void;
-}
-
-export const Header: React.FC<Props> = ({ onAddTodo }) => {
+export const Header = ({ isLoading }: { isLoading: boolean }) => {
   return (
     <header className='header'>
       <h1>
@@ -17,7 +12,7 @@ export const Header: React.FC<Props> = ({ onAddTodo }) => {
         />
       </h1>
 
-      <CreateTodo saveTodo={onAddTodo} />
+      {!isLoading && <CreateTodo />}
     </header>
   );
 };

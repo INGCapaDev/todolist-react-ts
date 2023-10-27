@@ -1,18 +1,27 @@
 import { useState } from 'react';
-import type { TodoTitle } from '../types/todos.d.ts';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createTask } from '../api/taskAPI';
+import { toast } from 'react-hot-toast';
 
-interface Props {
-  saveTodo: ({ title }: TodoTitle) => void;
-}
+export const CreateTodo = () => {
+  const queryClient = useQueryClient();
 
-export const CreateTodo: React.FC<Props> = ({ saveTodo }) => {
+  const { mutate: createNewTask } = useMutation({
+    mutationKey: ['createTask'],
+    mutationFn: createTask,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['todos'],
+      });
+      toast.success('Tarea creada correctamente');
+    },
+  });
+
   const [inputValue, setInputValue] = useState('');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    saveTodo({
-      title: inputValue,
-    });
+    createNewTask(inputValue);
     setInputValue('');
   };
 

@@ -11,6 +11,4 @@ export type TodoTitle = Pick<TodoType, 'title'>;
 
 export interface Props {
   todos: ListOfTodos;
-  onRemoveTodo: (id: string) => void;
-  onToggleCompletedTodo: (props: TodoToggleProps) => void;
 }

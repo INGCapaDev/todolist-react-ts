@@ -1,11 +1,23 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { Props } from '../types/todos';
 import Todo from './Todo.tsx';
+import { deleteTask } from '../api/taskAPI.ts';
+import { toast } from 'react-hot-toast';
 
-export const Todos: React.FC<Props> = ({
-  todos,
-  onRemoveTodo,
-  onToggleCompletedTodo,
-}) => {
+export const Todos: React.FC<Props> = ({ todos }) => {
+  const queryClient = useQueryClient();
+
+  const { mutate: removeTodo } = useMutation({
+    mutationKey: ['removeTodo'],
+    mutationFn: deleteTask,
+    onSuccess: () => {
+      toast.success('Tarea eliminada');
+      queryClient.invalidateQueries({
+        queryKey: ['todos'],
+      });
+    },
+  });
+
   return (
     <ul className='todo-list'>
       {todos.map((todo) => (
@@ -15,8 +27,9 @@ export const Todos: React.FC<Props> = ({
             id={todo.id}
             title={todo.title}
             completed={todo.completed}
-            onRemoveTodo={onRemoveTodo}
-            onToggleCompletedTodo={onToggleCompletedTodo}
+            onRemoveTodo={() => {
+              removeTodo(todo.id);
+            }}
           />
         </li>
       ))}
